@@ -16,41 +16,21 @@ import {
   Text,
   useColorScheme,
   View,
+  FlatList,
+  Button,
 } from 'react-native';
 
 import {
   Colors,
-  DebugInstructions,
-  Header,
   LearnMoreLinks,
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 
-const Section = ({children, title}): Node => {
-  const isDarkMode = useColorScheme() === 'dark';
-  return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
-    </View>
-  );
-};
+import ListContent from './components/ListItem';
+import Card from "./components/Card";
+import Header from './components/header';
+
+const headerHeight = 40 * 2;
 
 const App: () => Node = () => {
   const isDarkMode = useColorScheme() === 'dark';
@@ -59,33 +39,49 @@ const App: () => Node = () => {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
   };
 
+  const entries = [
+    {title: "title", location: "location", time: "time"},
+    {title: "title", location: "location", time: "time"},
+    {title: "title", location: "location", time: "time"},
+    {title: "title", location: "location", time: "time"},
+    {title: "title", location: "location", time: "time"},
+    {title: "title", location: "location", time: "time"},
+    {title: "title", location: "location", time: "time"},
+  ];
+
+  state = {
+    messages: []
+  };
+ 
+  getMessages = () => {
+    gmailApi.getMessages(true, 5).then(res => {
+      this.setState({ messages: gmailApi.normalizeData(res) });
+    });
+  };
+
   return (
     <SafeAreaView style={backgroundStyle}>
       <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <Header />
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
-          <Section title="Step One">
-            Edit <Text style={styles.highlight}>App.js</Text> to change this
-            screen and then come back to see your edits.
-          </Section>
-          <Section title="See Your Changes">
-            <ReloadInstructions />
-          </Section>
-          <Section title="Debug">
-            <DebugInstructions />
-          </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-          <LearnMoreLinks />
-        </View>
-      </ScrollView>
+
+      <View style={[styles.header]}>
+        <Header {...{headerHeight}} />
+      </View>
+
+      <View style={{
+              backgroundColor: isDarkMode ? Colors.black : Colors.white,
+            }}>
+
+        <FlatList style={styles.listStyle}
+
+          data={entries}
+          renderItem={({item}) => (
+            <Card title={item.title} 
+                location={item.location} 
+                time={item.time}/>
+          )}
+          />
+
+      </View>
     </SafeAreaView>
   );
 };
@@ -106,6 +102,27 @@ const styles = StyleSheet.create({
   },
   highlight: {
     fontWeight: '700',
+  },
+
+  header: {
+    position: 'absolute',
+    backgroundColor: '#1c1c1c',
+    left: 0,
+    right: 0,
+    width: '100%',
+    zIndex: 1,
+  },
+  subHeader: {
+    height: headerHeight / 2,
+    width: '100%',
+    paddingHorizontal: 10,
+  },
+  container: {
+    flex: 1,
+    backgroundColor: '#000',
+  },
+  listStyle: {
+    marginTop: 50,
   },
 });
 
