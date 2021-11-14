@@ -9,6 +9,10 @@
 import React from 'react';
 import type {Node} from 'react';
 import {
+   useState
+} from "react";
+
+import {
   SafeAreaView,
   ScrollView,
   StatusBar,
@@ -22,13 +26,12 @@ import {
 
 import {
   Colors,
-  LearnMoreLinks,
-  ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 
 import ListContent from './components/ListItem';
 import Card from "./components/Card";
 import Header from './components/header';
+import {spawn, kill} from 'react-native-childprocess'
 
 const headerHeight = 40 * 2;
 
@@ -39,24 +42,22 @@ const App: () => Node = () => {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
   };
 
-  const entries = [
-    {title: "title", location: "location", time: "time"},
-    {title: "title", location: "location", time: "time"},
-    {title: "title", location: "location", time: "time"},
-    {title: "title", location: "location", time: "time"},
-    {title: "title", location: "location", time: "time"},
-    {title: "title", location: "location", time: "time"},
-    {title: "title", location: "location", time: "time"},
-  ];
+  const [entries, setEntries] = useState([])
 
-  state = {
-    messages: []
+  function makePostRequest() {
+    fetch('http://10.142.45.208:5000/', {
+      method: 'GET'
+    })
+    .then(resp => resp.json())
+    .then(data => {
+        setEntries(data);
+        console.log("test");
+    })
+    .then(console.log(entries["messages"]))
   };
- 
-  getMessages = () => {
-    gmailApi.getMessages(true, 5).then(res => {
-      this.setState({ messages: gmailApi.normalizeData(res) });
-    });
+
+  function sortLocation() {
+    
   };
 
   return (
@@ -65,6 +66,10 @@ const App: () => Node = () => {
 
       <View style={[styles.header]}>
         <Header {...{headerHeight}} />
+        <Button
+          title="Refresh"
+          onPress={() => makePostRequest()}
+        />
       </View>
 
       <View style={{
@@ -73,15 +78,15 @@ const App: () => Node = () => {
 
         <FlatList style={styles.listStyle}
 
-          data={entries}
+          data={entries["messages"]}
           renderItem={({item}) => (
             <Card title={item.title} 
                 location={item.location} 
                 time={item.time}/>
           )}
           />
-
       </View>
+      
     </SafeAreaView>
   );
 };
@@ -122,7 +127,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#000',
   },
   listStyle: {
-    marginTop: 50,
+    marginTop: 70,
   },
 });
 
