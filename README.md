@@ -1,8 +1,13 @@
 # Warden
 
-1st Place CivHacks winner! https://devpost.com/submit-to/14189-civhacks/manage/submissions
+1st Place CivHacks winner!   
 
-Warden is a compilation of WarnMe notifications organized in a coherent way. Our main objective behind Warden is to create an easy-to-navigate criminal activity tracker. Through Warden, we provide politicians and public workers a direct way of measuring progress in public enforcement and addressing areas of concern. For researchers and organizations, they can use our real-time data of criminal activities that are not readily available/accessible from Criminal Enforcement institutions. For the public, they could use Warden as an incentive to take initiative in marked areas of concern, which in turn promotes overall civil engagement.
+Links:
+- [Devpost Submission](https://devpost.com/submit-to/14189-civhacks/manage/submissions)
+
+- [YouTube Video Demo](https://www.youtube.com/watch?v=ReaFHBaKDtBk)
+
+Warden is a compilation of WarnMe notifications organized in a coherent way. Our main objective behind Warden is to create an easy-to-navigate criminal activity tracker. Through Warden, we provide politicians and public workers a direct way of measuring progress in public enforcement and addressing areas of concern. For researchers and organizations, they can use our real-time data of criminal activities that are not readily available/accessible from criminal enforcement institutions. For the public, they could use Warden as an incentive to take initiative in marked areas of concern, which in turn promotes overall civil engagement.
 
 
 
